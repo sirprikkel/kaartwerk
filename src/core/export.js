@@ -77,7 +77,7 @@ async function captureMapSnapshot() {
 	return null;
 }
 
-export async function exportToPNG(element, filename, statusElement) {
+export async function exportToPNG(element, filename, statusElement, options = {}) {
 	if (statusElement) statusElement.classList.remove('hidden');
 
 	const originalTransform = element.style.transform;
@@ -92,15 +92,21 @@ export async function exportToPNG(element, filename, statusElement) {
 			try { await document.fonts.ready; } catch (e) { }
 		}
 
+		const posterScalerEl = document.getElementById('poster-scaler');
+		const posterContainerEl = document.getElementById('poster-container');
+		const logicalContainerWidth = posterContainerEl ? (posterContainerEl.offsetWidth || targetWidth) : targetWidth;
+		const logicalContainerHeight = posterContainerEl ? (posterContainerEl.offsetHeight || targetHeight) : targetHeight;
+		const scale = logicalContainerWidth > 0 ? (targetWidth / logicalContainerWidth) : 1;
+
 		const canvas = await html2canvas(element, {
 			useCORS: true,
-			scale: 1,
+			scale: scale,
 			logging: false,
 			backgroundColor: '#ffffff',
-			width: targetWidth,
-			height: targetHeight,
-			windowWidth: targetWidth,
-			windowHeight: targetHeight,
+			width: Math.round(logicalContainerWidth),
+			height: Math.round(logicalContainerHeight),
+			windowWidth: Math.round(logicalContainerWidth),
+			windowHeight: Math.round(logicalContainerHeight),
 			imageTimeout: 0,
 			ignoreElements: (el) => {
 				return el.id === 'map-preview' || el.id === 'artistic-map' || el.classList.contains('leaflet-control-container');
@@ -110,31 +116,31 @@ export async function exportToPNG(element, filename, statusElement) {
 				const clonedContainer = clonedDoc.querySelector('#poster-container');
 				const clonedMain = clonedDoc.querySelector('main');
 
-				clonedDoc.body.style.width = `${targetWidth}px`;
-				clonedDoc.body.style.height = `${targetHeight}px`;
+				clonedDoc.body.style.width = `${Math.round(logicalContainerWidth)}px`;
+				clonedDoc.body.style.height = `${Math.round(logicalContainerHeight)}px`;
 				clonedDoc.body.style.overflow = 'visible';
 
 				if (clonedMain) {
 					clonedMain.style.display = 'block';
 					clonedMain.style.padding = '0';
 					clonedMain.style.margin = '0';
-					clonedMain.style.width = `${targetWidth}px`;
-					clonedMain.style.height = `${targetHeight}px`;
+					clonedMain.style.width = `${Math.round(logicalContainerWidth)}px`;
+					clonedMain.style.height = `${Math.round(logicalContainerHeight)}px`;
 					clonedMain.style.transform = 'none';
 				}
 
 				if (clonedScaler) {
 					clonedScaler.style.transform = 'none';
-					clonedScaler.style.width = `${targetWidth}px`;
-					clonedScaler.style.height = `${targetHeight}px`;
+					clonedScaler.style.width = `${Math.round(logicalContainerWidth)}px`;
+					clonedScaler.style.height = `${Math.round(logicalContainerHeight)}px`;
 					clonedScaler.style.margin = '0';
 					clonedScaler.style.padding = '0';
 				}
 
 				if (clonedContainer) {
 					clonedContainer.style.transform = 'none';
-					clonedContainer.style.width = `${targetWidth}px`;
-					clonedContainer.style.height = `${targetHeight}px`;
+					clonedContainer.style.width = `${Math.round(logicalContainerWidth)}px`;
+					clonedContainer.style.height = `${Math.round(logicalContainerHeight)}px`;
 					clonedContainer.style.position = 'relative';
 					clonedContainer.style.margin = '0';
 					clonedContainer.style.boxShadow = 'none';
@@ -167,19 +173,28 @@ export async function exportToPNG(element, filename, statusElement) {
 					overlay.style.bottom = '0';
 					overlay.style.left = '0';
 					overlay.style.right = '0';
-					overlay.style.padding = '120px 80px';
 				}
 
 				const city = clonedDoc.querySelector('#display-city');
-				if (city) {
-					city.style.fontSize = '120px';
-					city.style.marginBottom = '40px';
+				if (city) city.style.transform = 'none';
+
+				const opts = Object.assign({ dividerOffset: 72 }, options || {});
+				const dividerOffset = typeof opts.dividerOffset === 'number' ? opts.dividerOffset : 0;
+
+				const clonedDivider = clonedDoc.querySelector('#poster-divider');
+				if (dividerOffset && clonedDivider) {
+					if (dividerOffset > 0) {
+						city.style.marginBottom = (parseFloat(city.style.marginBottom || '0') + dividerOffset) + 'px';
+					} else {
+						clonedDivider.style.marginTop = (parseFloat(clonedDivider.style.marginTop || '0') + dividerOffset) + 'px';
+					}
 				}
 
 				const coords = clonedDoc.querySelector('#display-coords');
-				if (coords) {
-					coords.style.fontSize = '24px';
-				}
+				if (coords) coords.style.transform = 'none';
+
+				const clonedDivider2 = clonedDoc.querySelector('#poster-divider');
+				if (clonedDivider2) clonedDivider2.style.transform = 'none';
 			}
 		});
 
