@@ -19,6 +19,8 @@ export function setupControls() {
 	const artisticThemeSelect = document.getElementById('artistic-theme-select');
 	const artisticDesc = document.getElementById('artistic-desc');
 
+	const zoomControlContainer = zoomSlider.parentElement;
+
 	const labelsToggle = document.getElementById('show-labels-toggle');
 	const overlayToggle = document.getElementById('overlay-bg-toggle');
 	const customW = document.getElementById('custom-w');
@@ -76,6 +78,31 @@ export function setupControls() {
 		updateMapPosition(state.lat, lon);
 	});
 
+
+	function sanitizeCoordInput(v) {
+		if (!v) return v;
+		v = String(v).replace(/,/g, '.');
+		v = v.replace(/[^0-9.\-]/g, '');
+		const hasMinus = v.indexOf('-') !== -1;
+		v = v.replace(/\-/g, '');
+		if (hasMinus) v = '-' + v;
+		const firstDot = v.indexOf('.');
+		if (firstDot !== -1) {
+			v = v.slice(0, firstDot + 1) + v.slice(firstDot + 1).replace(/\./g, '');
+		}
+		return v;
+	}
+
+	latInput.addEventListener('input', (e) => {
+		const cleaned = sanitizeCoordInput(e.target.value);
+		if (cleaned !== e.target.value) e.target.value = cleaned;
+	});
+
+	lonInput.addEventListener('input', (e) => {
+		const cleaned = sanitizeCoordInput(e.target.value);
+		if (cleaned !== e.target.value) e.target.value = cleaned;
+	});
+
 	zoomSlider.addEventListener('input', (e) => {
 		const zoom = parseInt(e.target.value);
 		updateState({ zoom });
@@ -125,12 +152,18 @@ export function setupControls() {
 		if (currentState.renderMode === 'tile') {
 			modeTile.className = 'flex-1 py-2 text-xs font-bold rounded-lg bg-indigo-600 text-white shadow-sm';
 			modeArtistic.className = 'flex-1 py-2 text-xs font-bold rounded-lg text-slate-500 hover:text-slate-900';
-			tileSettings.classList.remove('hidden');
+			Array.from(tileSettings.children).forEach(c => c.classList.remove('hidden'));
 			artisticSettings.classList.add('hidden');
 		} else {
 			modeTile.className = 'flex-1 py-2 text-xs font-bold rounded-lg text-slate-500 hover:text-slate-900';
 			modeArtistic.className = 'flex-1 py-2 text-xs font-bold rounded-lg bg-indigo-600 text-white shadow-sm';
-			tileSettings.classList.add('hidden');
+			Array.from(tileSettings.children).forEach(c => {
+				if (c.contains(zoomSlider) || c === zoomControlContainer) {
+					c.classList.remove('hidden');
+				} else {
+					c.classList.add('hidden');
+				}
+			});
 			artisticSettings.classList.remove('hidden');
 		}
 
