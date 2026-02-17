@@ -7,6 +7,9 @@ let tileLayer = null;
 let artisticMap = null;
 let currentArtisticThemeName = null;
 let isSyncing = false;
+let styleChangeInProgress = false;
+let pendingArtisticStyle = null;
+let pendingArtisticThemeName = null;
 
 export function initMap(containerId, initialCenter, initialZoom, initialTileUrl) {
 	map = L.map(containerId, {
@@ -62,6 +65,18 @@ function initArtisticMap(containerId, center, zoom) {
 	artisticMap.scrollZoom.setWheelZoomRate(1);
 	artisticMap.scrollZoom.setZoomRate(1 / 600);
 
+	artisticMap.on('style.load', () => {
+		if (pendingArtisticStyle) {
+			const next = pendingArtisticStyle;
+			const nextName = pendingArtisticThemeName;
+			pendingArtisticStyle = null;
+			pendingArtisticThemeName = null;
+			currentArtisticThemeName = nextName;
+			artisticMap.setStyle(next);
+		} else {
+			styleChangeInProgress = false;
+		}
+	});
 	artisticMap.on('moveend', () => {
 		if (isSyncing) return;
 		isSyncing = true;
@@ -89,6 +104,16 @@ export function updateArtisticStyle(theme) {
 
 	currentArtisticThemeName = theme.name;
 	const style = generateMapLibreStyle(theme);
+
+	const styleNotReady = typeof artisticMap.isStyleLoaded === 'function' && !artisticMap.isStyleLoaded();
+	if (styleChangeInProgress || styleNotReady) {
+		pendingArtisticStyle = style;
+		pendingArtisticThemeName = theme.name;
+		styleChangeInProgress = true;
+		return;
+	}
+
+	styleChangeInProgress = true;
 	artisticMap.setStyle(style);
 }
 
@@ -194,6 +219,18 @@ export function waitForTilesLoad(timeout = 5000) {
 	return new Promise((resolve) => {
 		if (!map || !tileLayer) return resolve();
 
+		try {
+			if (tileLayer._tiles) {
+				const tiles = Object.values(tileLayer._tiles || {});
+				const anyLoading = tiles.some(t => {
+					const el = t.el || t.tile || (t._el);
+					return el && el.complete === false;
+				});
+				if (!anyLoading) return resolve();
+			}
+		} catch (e) {
+		}
+
 		let resolved = false;
 		const onLoad = () => {
 			if (resolved) return;
@@ -203,6 +240,33 @@ export function waitForTilesLoad(timeout = 5000) {
 		};
 
 		tileLayer.once('load', onLoad);
+
+		const timer = setTimeout(() => {
+			if (resolved) return;
+			resolved = true;
+			resolve();
+		}, timeout);
+	});
+}
+
+export function waitForArtisticIdle(timeout = 2000) {
+	return new Promise((resolve) => {
+		if (!artisticMap) return resolve();
+
+		let resolved = false;
+		const onIdle = () => {
+			if (resolved) return;
+			resolved = true;
+			clearTimeout(timer);
+			resolve();
+		};
+
+		try {
+			artisticMap.once('idle', onIdle);
+		} catch (e) {
+			resolve();
+			return;
+		}
 
 		const timer = setTimeout(() => {
 			if (resolved) return;
