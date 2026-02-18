@@ -111,30 +111,55 @@ export function setupControls() {
 	}
 
 	let searchTimeout;
+	let currentSearchController = null;
+	let searchRequestId = 0;
+
 	searchInput.addEventListener('input', (e) => {
 		clearTimeout(searchTimeout);
 		const query = e.target.value;
-		if (query.length < 3) {
-			searchResults.classList.add('hidden');
+		if (!query || query.length < 2) {
+			if (searchResults) searchResults.classList.add('hidden');
+			if (currentSearchController) {
+				try { currentSearchController.abort(); } catch (err) { }
+				currentSearchController = null;
+			}
 			return;
 		}
 
 		searchTimeout = setTimeout(async () => {
+			if (currentSearchController) {
+				try { currentSearchController.abort(); } catch (err) { }
+			}
+			const controller = new AbortController();
+			currentSearchController = controller;
+			const thisRequestId = ++searchRequestId;
+
 			if (searchLoading) searchLoading.classList.remove('hidden');
-			const results = await searchLocation(query);
+
+			let results = [];
+			try {
+				results = await searchLocation(query, { limit: 15, signal: controller.signal });
+			} catch (err) {
+				results = [];
+			}
+
+			if (thisRequestId !== searchRequestId) return;
+
 			if (searchLoading) searchLoading.classList.add('hidden');
 
-			if (results.length > 0) {
+			if (results && results.length > 0) {
 				searchResults.innerHTML = results.map(r => `
-          <div class="px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm" data-lat="${r.lat}" data-lon="${r.lon}" data-name="${r.shortName}">
-            ${r.name}
-          </div>
-        `).join('');
+		  <div class="px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm" data-lat="${r.lat}" data-lon="${r.lon}" data-name="${r.shortName}">
+			${r.name}
+		  </div>
+		`).join('');
 				searchResults.classList.remove('hidden');
 			} else {
 				searchResults.classList.add('hidden');
 			}
-		}, 500);
+
+			if (currentSearchController === controller) currentSearchController = null;
+		}, 1000);
 	});
 
 	let lastSelectionAt = 0;
@@ -222,12 +247,9 @@ export function setupControls() {
 	modeTile.addEventListener('click', () => updateState({ renderMode: 'tile' }));
 	modeArtistic.addEventListener('click', () => updateState({ renderMode: 'artistic' }));
 
-	// Keep theme changes responsive on mobile: update state immediately and
-	// also update the map tiles (debounced) so the UI feels snappy.
 	let _themeChangeTimer = null;
 	function applyThemeChange(value) {
 		updateState({ theme: value });
-		// if we're in tile mode, update tile url immediately
 		if (state.renderMode === 'tile') {
 			const t = getSelectedTheme();
 			if (t && t.tileUrl) updateMapTheme(t.tileUrl);
@@ -238,7 +260,6 @@ export function setupControls() {
 	if (themeSelect) {
 		const onThemeInput = (e) => {
 			const v = e.target.value;
-			// debounce to avoid thrashing tile requests when swiping/selecting quickly
 			clearTimeout(_themeChangeTimer);
 			_themeChangeTimer = setTimeout(() => applyThemeChange(v), 120);
 		};
@@ -248,7 +269,6 @@ export function setupControls() {
 
 	artisticThemeSelect.addEventListener('change', (e) => {
 		updateState({ artisticTheme: e.target.value });
-		// apply artistic style immediately for faster feedback on mobile
 		if (state.renderMode === 'artistic') {
 			const theme = getSelectedArtisticTheme();
 			updateArtisticStyle(theme);
