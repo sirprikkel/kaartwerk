@@ -2,7 +2,7 @@ import { state, updateState, getSelectedTheme, getSelectedArtisticTheme } from '
 import { artisticThemes } from '../core/artistic-themes.js';
 import { themes } from '../core/themes.js';
 import { outputPresets } from '../core/output-presets.js';
-import { updateMapPosition, invalidateMapSize, updateArtisticStyle } from '../map/map-init.js';
+import { updateMapPosition, invalidateMapSize, updateArtisticStyle, updateMapTheme } from '../map/map-init.js';
 import { searchLocation, formatCoords } from '../map/geocoder.js';
 
 export function setupControls() {
@@ -44,8 +44,6 @@ export function setupControls() {
 			})
 			.join('\n');
 	}
-
-	const zoomControlContainer = zoomSlider.parentElement;
 
 	const labelsToggle = document.getElementById('show-labels-toggle');
 	const overlayBgButtons = document.querySelectorAll('.overlay-bg-btn');
@@ -139,22 +137,35 @@ export function setupControls() {
 		}, 500);
 	});
 
-	searchResults.addEventListener('click', (e) => {
+	let lastSelectionAt = 0;
+	function selectResultElement(item) {
+		const lat = parseFloat(item.dataset.lat);
+		const lon = parseFloat(item.dataset.lon);
+		const name = item.dataset.name;
+
+		if (!cityOverrideInput || !cityOverrideInput.value.trim()) {
+			updateState({ city: name.toUpperCase() });
+		}
+		updateState({ lat, lon });
+		updateMapPosition(lat, lon);
+
+		searchInput.value = name;
+		searchResults.classList.add('hidden');
+		lastSelectionAt = Date.now();
+	}
+
+	searchResults.addEventListener('pointerdown', (e) => {
 		const item = e.target.closest('[data-lat]');
 		if (item) {
-			const lat = parseFloat(item.dataset.lat);
-			const lon = parseFloat(item.dataset.lon);
-			const name = item.dataset.name;
-
-			if (!cityOverrideInput || !cityOverrideInput.value.trim()) {
-				updateState({ city: name.toUpperCase() });
-			}
-			updateState({ lat, lon });
-			updateMapPosition(lat, lon);
-
-			searchInput.value = name;
-			searchResults.classList.add('hidden');
+			selectResultElement(item);
+			e.preventDefault();
 		}
+	});
+
+	searchResults.addEventListener('click', (e) => {
+		if (Date.now() - lastSelectionAt < 500) return;
+		const item = e.target.closest('[data-lat]');
+		if (item) selectResultElement(item);
 	});
 
 	latInput.addEventListener('change', (e) => {
@@ -211,12 +222,38 @@ export function setupControls() {
 	modeTile.addEventListener('click', () => updateState({ renderMode: 'tile' }));
 	modeArtistic.addEventListener('click', () => updateState({ renderMode: 'artistic' }));
 
-	themeSelect.addEventListener('change', (e) => {
-		updateState({ theme: e.target.value });
-	});
+	// Keep theme changes responsive on mobile: update state immediately and
+	// also update the map tiles (debounced) so the UI feels snappy.
+	let _themeChangeTimer = null;
+	function applyThemeChange(value) {
+		updateState({ theme: value });
+		// if we're in tile mode, update tile url immediately
+		if (state.renderMode === 'tile') {
+			const t = getSelectedTheme();
+			if (t && t.tileUrl) updateMapTheme(t.tileUrl);
+			invalidateMapSize();
+		}
+	}
+
+	if (themeSelect) {
+		const onThemeInput = (e) => {
+			const v = e.target.value;
+			// debounce to avoid thrashing tile requests when swiping/selecting quickly
+			clearTimeout(_themeChangeTimer);
+			_themeChangeTimer = setTimeout(() => applyThemeChange(v), 120);
+		};
+		themeSelect.addEventListener('change', onThemeInput);
+		themeSelect.addEventListener('input', onThemeInput);
+	}
 
 	artisticThemeSelect.addEventListener('change', (e) => {
 		updateState({ artisticTheme: e.target.value });
+		// apply artistic style immediately for faster feedback on mobile
+		if (state.renderMode === 'artistic') {
+			const theme = getSelectedArtisticTheme();
+			updateArtisticStyle(theme);
+			invalidateMapSize();
+		}
 	});
 
 	if (labelsToggle) {
