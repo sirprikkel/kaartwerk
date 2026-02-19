@@ -240,8 +240,17 @@ export async function exportToPNG(element, filename, statusElement, options = {}
 					clonedDivider.style.transform = 'none';
 					clonedDivider.style.backgroundColor = textColor;
 
-					const opts = Object.assign({ dividerOffset: 72 }, options || {});
-					const dividerOffset = typeof opts.dividerOffset === 'number' ? opts.dividerOffset : 0;
+					const defaultDividerOffsets = { small: 48, medium: 54, large: 72 };
+					const opts = Object.assign({}, options || {});
+					let dividerOffset = 0;
+					if (typeof opts.dividerOffset === 'number') {
+						dividerOffset = opts.dividerOffset;
+					} else if (opts.dividerOffsets && typeof opts.dividerOffsets[state.overlaySize || 'medium'] === 'number') {
+						dividerOffset = opts.dividerOffsets[state.overlaySize || 'medium'];
+					} else {
+						const sizeKey = state.overlaySize || 'medium';
+						dividerOffset = defaultDividerOffsets[sizeKey] || 0;
+					}
 
 					if (dividerOffset && city) {
 						if (dividerOffset > 0) {
