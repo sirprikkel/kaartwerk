@@ -30,9 +30,5 @@ export default defineConfig({
 				autoprefixer(),
 			],
 		},
-	},
-	server: {
-		port: 3000,
-		strictPort: false,
 	}
 });
