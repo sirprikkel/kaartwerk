@@ -434,7 +434,7 @@ export function setupControls() {
 	const resetSettingsBtn = document.getElementById('reset-settings-btn');
 	if (resetSettingsBtn) {
 		resetSettingsBtn.addEventListener('click', () => {
-			if (confirm('Apakah Anda yakin ingin mengatur ulang semua pengaturan ke default?')) {
+			if (confirm('Are you sure you want to reset all settings?')) {
 				updateState(defaultState);
 			}
 		});
