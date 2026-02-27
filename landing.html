@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kaartwerk — Jouw plek, jouw kunstwerk.</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#2D5F3E',
+            gold: '#C8A951',
+            bg: '#FAFAF7',
+            ink: '#1A1A1A',
+          },
+          fontFamily: {
+            display: ['"Playfair Display"', 'Georgia', 'serif'],
+            body: ['Outfit', 'system-ui', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+  <style>
+    body { background-color: #FAFAF7; color: #1A1A1A; font-family: 'Outfit', system-ui, sans-serif; }
+    .font-display { font-family: 'Playfair Display', Georgia, serif; }
+    .hero-gradient {
+      background: linear-gradient(135deg, #2D5F3E 0%, #1e4229 50%, #0f2d1a 100%);
+    }
+    .card-shadow { box-shadow: 0 8px 32px rgba(45, 95, 62, 0.12); }
+    .map-placeholder {
+      background: linear-gradient(160deg, #e8f0ea 0%, #d4e5d8 40%, #c2d9c8 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .map-placeholder::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        repeating-linear-gradient(0deg, transparent, transparent 28px, rgba(45,95,62,0.06) 28px, rgba(45,95,62,0.06) 29px),
+        repeating-linear-gradient(90deg, transparent, transparent 28px, rgba(45,95,62,0.06) 28px, rgba(45,95,62,0.06) 29px);
+    }
+    .map-placeholder::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 48px;
+      height: 48px;
+      border-radius: 50% 50% 50% 0;
+      background: #C8A951;
+      transform: translate(-50%, -60%) rotate(-45deg);
+      opacity: 0.6;
+    }
+    .step-line::after {
+      content: '';
+      position: absolute;
+      top: 20px;
+      left: calc(50% + 24px);
+      width: calc(100% - 48px);
+      height: 1px;
+      background: linear-gradient(90deg, #C8A951, transparent);
+    }
+  </style>
+</head>
+<body class="antialiased">
+
+  <!-- NAV -->
+  <nav class="absolute top-0 left-0 right-0 z-10 flex items-center justify-between px-6 py-5 md:px-12">
+    <span class="font-display text-xl font-semibold text-white tracking-wide">Kaartwerk</span>
+    <a href="index.html"
+       class="text-sm font-body font-medium text-white/80 hover:text-white border border-white/30 hover:border-white/60 px-4 py-2 rounded-full transition-all duration-200">
+      Open editor
+    </a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero-gradient min-h-screen flex flex-col items-center justify-center text-center px-6 pt-24 pb-20">
+    <div class="max-w-3xl mx-auto">
+      <p class="text-gold font-body text-sm font-medium tracking-[0.2em] uppercase mb-6 opacity-90">
+        Kaartposter op maat
+      </p>
+      <h1 class="font-display text-6xl md:text-8xl font-bold text-white leading-none mb-6">
+        Kaart<span class="text-gold italic">werk</span>
+      </h1>
+      <p class="font-body text-xl md:text-2xl text-white/70 font-light mb-12 leading-relaxed">
+        Jouw plek, jouw kunstwerk.
+      </p>
+      <a href="index.html"
+         class="inline-flex items-center gap-3 bg-gold hover:bg-yellow-400 text-ink font-body font-semibold text-lg px-8 py-4 rounded-full transition-all duration-200 hover:scale-105 hover:shadow-xl shadow-gold/30 shadow-lg">
+        Ontwerp jouw poster
+        <span class="text-xl">→</span>
+      </a>
+      <p class="mt-6 font-body text-sm text-white/40">Geen account nodig · Direct beginnen</p>
+    </div>
+
+    <!-- Decorative scroll hint -->
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/30">
+      <span class="font-body text-xs tracking-widest uppercase">Ontdek</span>
+      <div class="w-px h-8 bg-gradient-to-b from-white/30 to-transparent"></div>
+    </div>
+  </section>
+
+  <!-- VOORBEELDEN -->
+  <section class="bg-bg py-20 px-6 md:px-12">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-14">
+        <h2 class="font-display text-4xl md:text-5xl font-semibold text-ink mb-4">
+          Van stad tot <span class="text-primary italic">kunstwerk</span>
+        </h2>
+        <p class="font-body text-lg text-ink/50 font-light max-w-xl mx-auto">
+          Elke straat, elk pad, elke herinnering — omgezet naar een stijlvolle wandposter.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+
+        <!-- Amsterdam -->
+        <div class="group bg-white rounded-2xl overflow-hidden card-shadow hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
+          <div class="map-placeholder h-64 w-full"></div>
+          <div class="p-6 border-t border-stone-100">
+            <div class="flex items-start justify-between">
+              <div>
+                <h3 class="font-display text-xl font-semibold text-ink">Amsterdam</h3>
+                <p class="font-body text-sm text-ink/40 mt-1">52.3676° N, 4.9041° O</p>
+              </div>
+              <span class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+                <span class="w-2 h-2 rounded-full bg-primary"></span>
+              </span>
+            </div>
+            <div class="mt-4 flex gap-2">
+              <span class="text-xs font-body font-medium bg-gold/15 text-primary px-3 py-1 rounded-full">Klassiek</span>
+              <span class="text-xs font-body font-medium bg-stone-100 text-ink/50 px-3 py-1 rounded-full">A2 poster</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Rotterdam -->
+        <div class="group bg-white rounded-2xl overflow-hidden card-shadow hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 md:mt-4">
+          <div class="map-placeholder h-64 w-full" style="background: linear-gradient(160deg, #e0e8f4 0%, #c8d8ec 40%, #b5c9e3 100%);"></div>
+          <div class="p-6 border-t border-stone-100">
+            <div class="flex items-start justify-between">
+              <div>
+                <h3 class="font-display text-xl font-semibold text-ink">Rotterdam</h3>
+                <p class="font-body text-sm text-ink/40 mt-1">51.9244° N, 4.4777° O</p>
+              </div>
+              <span class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+                <span class="w-2 h-2 rounded-full bg-primary"></span>
+              </span>
+            </div>
+            <div class="mt-4 flex gap-2">
+              <span class="text-xs font-body font-medium bg-gold/15 text-primary px-3 py-1 rounded-full">Modern</span>
+              <span class="text-xs font-body font-medium bg-stone-100 text-ink/50 px-3 py-1 rounded-full">A1 poster</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Utrecht -->
+        <div class="group bg-white rounded-2xl overflow-hidden card-shadow hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
+          <div class="map-placeholder h-64 w-full" style="background: linear-gradient(160deg, #f0ebe0 0%, #e5d9c4 40%, #d8c9ab 100%);"></div>
+          <div class="p-6 border-t border-stone-100">
+            <div class="flex items-start justify-between">
+              <div>
+                <h3 class="font-display text-xl font-semibold text-ink">Utrecht</h3>
+                <p class="font-body text-sm text-ink/40 mt-1">52.0907° N, 5.1214° O</p>
+              </div>
+              <span class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+                <span class="w-2 h-2 rounded-full bg-primary"></span>
+              </span>
+            </div>
+            <div class="mt-4 flex gap-2">
+              <span class="text-xs font-body font-medium bg-gold/15 text-primary px-3 py-1 rounded-full">Vintage</span>
+              <span class="text-xs font-body font-medium bg-stone-100 text-ink/50 px-3 py-1 rounded-full">50×70 cm</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- HOE WERKT HET -->
+  <section class="bg-white py-20 px-6 md:px-12">
+    <div class="max-w-5xl mx-auto">
+      <div class="text-center mb-16">
+        <h2 class="font-display text-4xl md:text-5xl font-semibold text-ink mb-4">
+          Drie stappen naar<br><span class="text-primary italic">jouw poster</span>
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-8 relative">
+
+        <!-- Stap 1 -->
+        <div class="flex flex-col items-center text-center relative">
+          <div class="w-14 h-14 rounded-full bg-primary flex items-center justify-center mb-6 shadow-lg shadow-primary/20">
+            <span class="font-display text-xl font-bold text-white">1</span>
+          </div>
+          <div class="hidden md:block absolute top-7 left-[calc(50%+36px)] right-0 h-px bg-gradient-to-r from-gold/60 to-transparent"></div>
+          <h3 class="font-display text-xl font-semibold text-ink mb-3">Kies je locatie</h3>
+          <p class="font-body text-ink/50 text-sm font-light leading-relaxed max-w-xs">
+            Zoek op adres, stad of coördinaten. Zoom in op de wijk die jou dierbaar is.
+          </p>
+        </div>
+
+        <!-- Stap 2 -->
+        <div class="flex flex-col items-center text-center relative">
+          <div class="w-14 h-14 rounded-full bg-gold flex items-center justify-center mb-6 shadow-lg shadow-gold/20">
+            <span class="font-display text-xl font-bold text-ink">2</span>
+          </div>
+          <div class="hidden md:block absolute top-7 left-[calc(50%+36px)] right-0 h-px bg-gradient-to-r from-gold/60 to-transparent"></div>
+          <h3 class="font-display text-xl font-semibold text-ink mb-3">Pas je ontwerp aan</h3>
+          <p class="font-body text-ink/50 text-sm font-light leading-relaxed max-w-xs">
+            Kies kleuren, stijl en formaat. Voeg een persoonlijke tekst of icoon toe.
+          </p>
+        </div>
+
+        <!-- Stap 3 -->
+        <div class="flex flex-col items-center text-center">
+          <div class="w-14 h-14 rounded-full border-2 border-primary flex items-center justify-center mb-6">
+            <span class="font-display text-xl font-bold text-primary">3</span>
+          </div>
+          <h3 class="font-display text-xl font-semibold text-ink mb-3">Bestel je poster</h3>
+          <p class="font-body text-ink/50 text-sm font-light leading-relaxed max-w-xs">
+            Druk af in museumkwaliteit. Geleverd aan huis, klaar om op te hangen.
+          </p>
+        </div>
+
+      </div>
+
+      <!-- CTA -->
+      <div class="flex justify-center mt-16">
+        <a href="index.html"
+           class="inline-flex items-center gap-3 bg-primary hover:bg-green-900 text-white font-body font-semibold text-lg px-10 py-4 rounded-full transition-all duration-200 hover:scale-105 hover:shadow-xl shadow-primary/20 shadow-lg">
+          Ontwerp jouw poster →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-ink text-white/40 py-10 px-6 md:px-12">
+    <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+      <span class="font-display text-white text-lg font-semibold">Kaartwerk</span>
+      <p class="font-body text-sm text-center">
+        &copy; 2026 Kaartwerk. Alle rechten voorbehouden.
+      </p>
+      <div class="flex gap-6">
+        <a href="#" class="font-body text-sm hover:text-white/70 transition-colors">Privacy</a>
+        <a href="#" class="font-body text-sm hover:text-white/70 transition-colors">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
