@@ -20,6 +20,7 @@ app.get('/api/health', (_req, res) => {
 
 app.use('/api', checkoutRouter);
 app.use('/api/mollie', webhookRouter);
+app.use('/api/printful', webhookRouter);
 
 app.listen(PORT, () => {
 	console.log(`Kaartwerk server running on http://localhost:${PORT}`);
