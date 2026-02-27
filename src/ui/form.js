@@ -13,6 +13,7 @@ import {
 	updateRouteGeometry
 } from '../map/map-init.js';
 import { searchLocation, formatCoords } from '../map/geocoder.js';
+import { calculatePrice, FORMATS, MATERIALS } from '../core/pricing.js';
 
 
 export function setupControls() {
@@ -800,6 +801,33 @@ export function setupControls() {
 		document.addEventListener('touchend', endDrag);
 	}
 
+	const formatSelector = document.getElementById('format-selector');
+	const materialSelector = document.getElementById('material-selector');
+	const priceDisplay = document.getElementById('price-display');
+
+	if (formatSelector) {
+		formatSelector.innerHTML = FORMATS.map(fmt => `
+			<button type="button" data-format="${fmt.key}" class="format-btn py-3 text-[11px] font-bold border border-slate-100 bg-slate-50 rounded-xl hover:bg-white hover:border-accent hover:shadow-sm transition-all duration-200 flex flex-col items-center justify-center">
+				<span>${fmt.label}</span>
+			</button>
+		`).join('');
+		formatSelector.querySelectorAll('.format-btn').forEach(btn => {
+			btn.addEventListener('click', () => updateState({ format: btn.dataset.format }));
+		});
+	}
+
+	if (materialSelector) {
+		materialSelector.innerHTML = MATERIALS.map(mat => `
+			<button type="button" data-material="${mat.key}" class="material-btn py-3 px-2 text-[11px] font-bold border border-slate-100 bg-slate-50 rounded-xl hover:bg-white hover:border-accent hover:shadow-sm transition-all duration-200 flex flex-col items-center justify-center text-center">
+				<span>${mat.label}</span>
+				<span class="text-[9px] font-normal text-slate-400 mt-0.5">${mat.surcharge > 0 ? '+€' + mat.surcharge : 'Inclusief'}</span>
+			</button>
+		`).join('');
+		materialSelector.querySelectorAll('.material-btn').forEach(btn => {
+			btn.addEventListener('click', () => updateState({ material: btn.dataset.material }));
+		});
+	}
+
 	return (currentState) => {
 		if (cityOverrideInput) cityOverrideInput.value = currentState.cityOverride || '';
 		if (countryOverrideInput) countryOverrideInput.value = currentState.countryOverride || '';
@@ -1026,6 +1054,53 @@ export function setupControls() {
 		const g = parseInt(accentColor.slice(3, 5), 16);
 		const b = parseInt(accentColor.slice(5, 7), 16);
 		document.documentElement.style.setProperty('--accent-color-rgb', `${r}, ${g}, ${b}`);
+
+		if (formatSelector) {
+			formatSelector.querySelectorAll('.format-btn').forEach(btn => {
+				const isActive = btn.dataset.format === (currentState.format || 'A3');
+				btn.classList.toggle('border-accent', isActive);
+				btn.classList.toggle('bg-accent-light', isActive);
+				btn.classList.toggle('border-slate-100', !isActive);
+				btn.classList.toggle('bg-slate-50', !isActive);
+			});
+		}
+
+		if (materialSelector) {
+			materialSelector.querySelectorAll('.material-btn').forEach(btn => {
+				const isActive = btn.dataset.material === (currentState.material || 'paper');
+				btn.classList.toggle('border-accent', isActive);
+				btn.classList.toggle('bg-accent-light', isActive);
+				btn.classList.toggle('border-slate-100', !isActive);
+				btn.classList.toggle('bg-slate-50', !isActive);
+			});
+		}
+
+		if (priceDisplay) {
+			const { basePrice, materialSurcharge, subtotal, shipping, total } = calculatePrice(
+				currentState.format || 'A3',
+				currentState.material || 'paper'
+			);
+			const fmt = (n) => `€${n.toFixed(2).replace('.', ',')}`;
+			priceDisplay.innerHTML = `
+				<div class="flex items-center justify-between text-[11px] text-slate-500">
+					<span>Formaat (${currentState.format || 'A3'})</span>
+					<span class="font-medium">${fmt(basePrice)}</span>
+				</div>
+				${materialSurcharge > 0 ? `
+				<div class="flex items-center justify-between text-[11px] text-slate-500">
+					<span>Materiaal toeslag</span>
+					<span class="font-medium">${fmt(materialSurcharge)}</span>
+				</div>` : ''}
+				<div class="flex items-center justify-between text-[11px] text-slate-500">
+					<span>Verzending</span>
+					<span class="font-medium">${fmt(shipping)}</span>
+				</div>
+				<div class="pt-2 border-t border-slate-200 flex items-center justify-between">
+					<span class="text-sm font-bold text-slate-900">Totaal</span>
+					<span class="text-sm font-black text-accent">${fmt(total)}</span>
+				</div>
+			`;
+		}
 	};
 }
 
