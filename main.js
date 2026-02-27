@@ -3,12 +3,14 @@ import './style.css';
 import { subscribe, state, getSelectedTheme } from './src/core/state.js';
 import { initMap, updateMapTheme, invalidateMapSize, waitForTilesLoad, waitForArtisticIdle, updateMarkerStyles, updateRouteStyles } from './src/map/map-init.js';
 import { setupControls, updatePreviewStyles } from './src/ui/form.js';
+import { setupCheckout } from './src/ui/checkout.js';
 import { exportToPNG } from './src/core/export.js';
 
 const initialTheme = getSelectedTheme();
 initMap('map-preview', [state.lat, state.lon], state.zoom, initialTheme.tileUrl);
 
 const syncUI = setupControls();
+setupCheckout();
 
 const exportBtn = document.getElementById('export-btn');
 const posterContainer = document.getElementById('poster-container');
