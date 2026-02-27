@@ -47,6 +47,8 @@ export const defaultState = {
 	overlayY: 0.85,
 	showCountry: true,
 	showCoords: true,
+	format: 'A3',
+	material: 'paper',
 };
 
 export const state = { ...defaultState };
@@ -88,7 +90,9 @@ const SAVED_KEYS = [
 	'overlayX',
 	'overlayY',
 	'showCountry',
-	'showCoords'
+	'showCoords',
+	'format',
+	'material'
 ];
 
 function loadSettings() {
