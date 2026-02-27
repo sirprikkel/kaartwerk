@@ -116,7 +116,7 @@ async function ensurePreviewReady() {
 }
 
 exportBtn.addEventListener('click', async () => {
-	const filename = `MapToPoster-${state.city.replace(/\s+/g, '-')}-${Date.now()}.png`;
+	const filename = `Kaartwerk-${state.city.replace(/\s+/g, '-')}-${Date.now()}.png`;
 	setExportButtonLoading(true, 'processing');
 	try {
 		await exportToPNG(posterContainer, filename, null);

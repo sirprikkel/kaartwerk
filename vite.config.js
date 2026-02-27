@@ -26,7 +26,9 @@ export default defineConfig({
 					theme: {
 						extend: {
 							colors: {
-								background: '#f8f9fa',
+								accent: '#2D5F3E',
+								background: '#FAFAF7',
+								gold: '#C8A951',
 								sidebar: '#ffffff',
 							},
 							fontFamily: {

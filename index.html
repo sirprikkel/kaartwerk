@@ -1,11 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="nl">
 
 <head>
 	<meta charset="UTF-8" />
 	<link rel="icon" type="image/x-icon" href="/favicon.ico" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>MapToPoster JS - Create Beautiful Map Art</title>
+	<title>Kaartwerk — Jouw plek, jouw kunstwerk.</title>
+	<link rel="canonical" href="https://kaartwerk.nl/editor" />
+	<meta name="description" content="Kaartwerk — Ontwerp en bestel unieke kaartposters van jouw favoriete plek." />
+	<meta property="og:title" content="Kaartwerk — Jouw plek, jouw kunstwerk." />
+	<meta property="og:description" content="Kaartwerk — Ontwerp en bestel unieke kaartposters van jouw favoriete plek." />
+	<meta property="og:site_name" content="Kaartwerk" />
 
 	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
 	<link href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css" rel="stylesheet" />
@@ -16,7 +21,7 @@
 	<link rel="stylesheet" href="/style.css">
 </head>
 
-<body class="bg-[#f8fafc] h-screen flex flex-col md:flex-row overflow-hidden">
+<body class="bg-[#FAFAF7] h-screen flex flex-col md:flex-row overflow-hidden">
 
 	<button id="mobile-toggle" class="md:hidden fixed bottom-8 right-4 z-[60] w-14 h-14 bg-slate-900 text-white rounded-2xl shadow-2xl flex items-center justify-center active:scale-95 transition-all">
 		<svg class="w-6 h-6 toggle-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -39,8 +44,8 @@
 					</svg>
 				</div>
 				<div>
-					<h1 class="text-xl font-bold tracking-tight text-slate-900 leading-none">MapToPoster <span class="text-accent">JS</span></h1>
-					<p class="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400 mt-1">Procedural Map Artist</p>
+					<h1 class="text-xl font-bold tracking-tight text-slate-900 leading-none">Kaartwerk</h1>
+					<p class="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400 mt-1">Jouw plek, jouw kunstwerk.</p>
 				</div>
 			</button>
 		</div>
