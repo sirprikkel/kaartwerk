@@ -48,3 +48,13 @@ export function updateOrderStatus(id, status) {
 export function getOrderByMollieId(mollieId) {
 	return db.prepare('SELECT * FROM orders WHERE mollie_id = ?').get(mollieId);
 }
+
+export function updateOrderPrintfulId(id, printfulId) {
+	db.prepare(`
+    UPDATE orders SET printful_id = ?, updated_at = datetime('now') WHERE id = ?
+  `).run(printfulId, id);
+}
+
+export function getOrderByPrintfulId(printfulId) {
+	return db.prepare('SELECT * FROM orders WHERE printful_id = ?').get(printfulId);
+}

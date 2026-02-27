@@ -1,7 +1,8 @@
 import { Router } from 'express';
 import { createMollieClient } from '@mollie/api-client';
-import { getOrderByMollieId, updateOrderStatus } from '../db/index.js';
-import { sendOrderConfirmation } from '../services/email.js';
+import { getOrderByMollieId, updateOrderStatus, getOrderByPrintfulId } from '../db/index.js';
+import { sendShippingNotification } from '../services/email.js';
+import { processOrder } from '../services/pipeline.js';
 
 const router = Router();
 
@@ -26,7 +27,10 @@ router.post('/webhook', async (req, res) => {
 
 		if (status === 'paid') {
 			updateOrderStatus(order.id, 'paid');
-			await sendOrderConfirmation(order);
+			// Start order pipeline asynchroon (niet-blokkerend voor de webhook response)
+			processOrder(order.id).catch(err =>
+				console.error(`[webhook] Pipeline fout voor order ${order.id}:`, err.message),
+			);
 		} else if (status === 'canceled' || status === 'expired' || status === 'failed') {
 			updateOrderStatus(order.id, status);
 		}
@@ -34,6 +38,35 @@ router.post('/webhook', async (req, res) => {
 		res.status(200).send('ok');
 	} catch (err) {
 		console.error('Webhook error:', err.message);
+		res.status(500).send('Internal error');
+	}
+});
+
+// Printful webhook: shipment tracking
+router.post('/printful/webhook', async (req, res) => {
+	const { type, data } = req.body;
+
+	try {
+		if (type === 'package_shipped') {
+			const printfulOrderId = String(data?.shipment?.order_id ?? '');
+			const trackingUrl = data?.shipment?.tracking_url ?? null;
+
+			if (printfulOrderId) {
+				const order = getOrderByPrintfulId(printfulOrderId);
+
+				if (order) {
+					updateOrderStatus(order.id, 'shipped');
+					await sendShippingNotification(order, trackingUrl);
+					console.log(`[printful] Order ${order.id} verzonden — tracking: ${trackingUrl}`);
+				} else {
+					console.warn(`[printful] Geen order gevonden voor printful_id ${printfulOrderId}`);
+				}
+			}
+		}
+
+		res.status(200).send('ok');
+	} catch (err) {
+		console.error('[printful] Webhook error:', err.message);
 		res.status(500).send('Internal error');
 	}
 });
