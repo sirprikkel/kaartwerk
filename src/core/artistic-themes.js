@@ -490,6 +490,8 @@ export const artisticThemes = {
 		road_motorway: "#8B2500",
 		road_primary: "#B8450A",
 		road_secondary: "#CC7A30",
+		road_tertiary: "#D9A050",
+		road_residential: "#E8C888",
 		road_default: "#CC7A30",
 		route: "#EF4444"
 	},
@@ -503,6 +505,8 @@ export const artisticThemes = {
 		road_motorway: "#E8F4FF",
 		road_primary: "#C5DCF0",
 		road_secondary: "#9FC5E8",
+		road_tertiary: "#7BAED4",
+		road_residential: "#5A96C0",
 		road_default: "#7BAED4",
 		route: "#EF4444"
 	},
@@ -516,6 +520,8 @@ export const artisticThemes = {
 		road_motorway: "#000000",
 		road_primary: "#0F0F0F",
 		road_secondary: "#252525",
+		road_tertiary: "#404040",
+		road_residential: "#5A5A5A",
 		road_default: "#404040",
 		route: "#EF4444"
 	},
@@ -529,6 +535,8 @@ export const artisticThemes = {
 		road_motorway: "#4ADEB0",
 		road_primary: "#2DB88F",
 		road_secondary: "#249673",
+		road_tertiary: "#1B7559",
+		road_residential: "#155C46",
 		road_default: "#155C46",
 		route: "#EF4444"
 	},
@@ -542,6 +550,8 @@ export const artisticThemes = {
 		road_motorway: "#2D4A3E",
 		road_primary: "#3D6B55",
 		road_secondary: "#5A8A70",
+		road_tertiary: "#7AAA90",
+		road_residential: "#A0C8B0",
 		road_default: "#7AAA90",
 		route: "#EF4444"
 	},
@@ -555,6 +565,8 @@ export const artisticThemes = {
 		road_motorway: "#050505",
 		road_primary: "#151515",
 		road_secondary: "#2A2A2A",
+		road_tertiary: "#404040",
+		road_residential: "#555555",
 		road_default: "#404040",
 		route: "#EF4444"
 	},
@@ -568,6 +580,8 @@ export const artisticThemes = {
 		road_motorway: "#8B2500",
 		road_primary: "#4A4A4A",
 		road_secondary: "#6A6A6A",
+		road_tertiary: "#909090",
+		road_residential: "#B8B8B8",
 		road_default: "#909090",
 		route: "#EF4444"
 	},
@@ -581,6 +595,8 @@ export const artisticThemes = {
 		road_motorway: "#D4AF37",
 		road_primary: "#C9A227",
 		road_secondary: "#A8893A",
+		road_tertiary: "#8B7355",
+		road_residential: "#6B5B4F",
 		road_default: "#8B7355",
 		route: "#EF4444"
 	},
@@ -594,6 +610,8 @@ export const artisticThemes = {
 		road_motorway: "#1A3A5C",
 		road_primary: "#2A5580",
 		road_secondary: "#4A7AA8",
+		road_tertiary: "#7AA0C8",
+		road_residential: "#A8C4E0",
 		road_default: "#4A7AA8",
 		route: "#EF4444"
 	},
@@ -607,6 +625,8 @@ export const artisticThemes = {
 		road_motorway: "#FF00FF",
 		road_primary: "#00FFFF",
 		road_secondary: "#00C8C8",
+		road_tertiary: "#0098A0",
+		road_residential: "#006870",
 		road_default: "#0098A0",
 		route: "#EF4444"
 	},
@@ -620,6 +640,8 @@ export const artisticThemes = {
 		road_motorway: "#FFFFFF",
 		road_primary: "#E0E0E0",
 		road_secondary: "#B0B0B0",
+		road_tertiary: "#808080",
+		road_residential: "#505050",
 		road_default: "#808080",
 		route: "#EF4444"
 	},
@@ -633,6 +655,8 @@ export const artisticThemes = {
 		road_motorway: "#1A5F7A",
 		road_primary: "#2A7A9A",
 		road_secondary: "#4A9AB8",
+		road_tertiary: "#70B8D0",
+		road_residential: "#A0D0E0",
 		road_default: "#4A9AB8",
 		route: "#EF4444"
 	},
@@ -646,6 +670,8 @@ export const artisticThemes = {
 		road_motorway: "#7B8794",
 		road_primary: "#9BA4B0",
 		road_secondary: "#B5AEBB",
+		road_tertiary: "#C9C0C9",
+		road_residential: "#D8D2D8",
 		road_default: "#C9C0C9",
 		route: "#EF4444"
 	},
@@ -659,6 +685,8 @@ export const artisticThemes = {
 		road_motorway: "#C45C3E",
 		road_primary: "#D87A5A",
 		road_secondary: "#E8A088",
+		road_tertiary: "#F0B8A8",
+		road_residential: "#F5D0C8",
 		road_default: "#E8A088",
 		route: "#EF4444"
 	},
@@ -672,6 +700,8 @@ export const artisticThemes = {
 		road_motorway: "#A0522D",
 		road_primary: "#B8653A",
 		road_secondary: "#C9846A",
+		road_tertiary: "#D9A08A",
+		road_residential: "#E5C4B0",
 		road_default: "#D9A08A",
 		route: "#EF4444"
 	},
@@ -685,6 +715,8 @@ export const artisticThemes = {
 		road_motorway: "#8B7355",
 		road_primary: "#A08B70",
 		road_secondary: "#B5A48E",
+		road_tertiary: "#C9BBAA",
+		road_residential: "#D9CFC2",
 		road_default: "#C9BBAA",
 		route: "#EF4444"
 	},
