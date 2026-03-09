@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="nl" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kaartwerk — Jouw Stad als Kunstwerk</title>
+    <meta name="description" content="Ontwerp prachtige, minimalistische kaartposters van jouw favoriete stad. Kies een thema, personaliseer en bestel direct.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" href="public/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        serif: ['Bodoni Moda', 'serif'],
+                        sans: ['Jost', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            dark: '#1C1917',
+                            medium: '#44403C',
+                            gold: '#CA8A04',
+                            'gold-light': '#EAB308',
+                            light: '#FAFAF9',
+                            muted: '#78716C',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        html { font-family: 'Jost', sans-serif; }
+
+        .poster-card {
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+        }
+        .poster-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 24px 48px rgba(0,0,0,0.15);
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #1C1917 0%, #44403C 50%, #CA8A04 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .scroll-gallery {
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        .scroll-gallery::-webkit-scrollbar { display: none; }
+
+        .hero-gradient {
+            background: radial-gradient(ellipse at 50% 0%, rgba(202,138,4,0.08) 0%, transparent 60%),
+                        linear-gradient(180deg, #FAFAF9 0%, #F5F5F4 100%);
+        }
+
+        .pricing-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .pricing-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 40px rgba(0,0,0,0.12);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .fade-in { transition: none; opacity: 1; transform: none; }
+            .poster-card { transition: none; }
+            .pricing-card { transition: none; }
+        }
+    </style>
+</head>
+<body class="bg-brand-light text-brand-dark antialiased">
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-brand-light/80 backdrop-blur-lg border-b border-stone-200/60">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16 md:h-20">
+                <a href="#" class="flex items-center gap-3 cursor-pointer">
+                    <img src="public/kaartwerk-logo.png" alt="Kaartwerk logo" class="h-10 w-auto">
+                </a>
+                <div class="hidden md:flex items-center gap-8 text-sm font-medium tracking-wide uppercase text-brand-medium">
+                    <a href="#steden" class="hover:text-brand-dark transition-colors duration-200 cursor-pointer">Steden</a>
+                    <a href="#themas" class="hover:text-brand-dark transition-colors duration-200 cursor-pointer">Thema's</a>
+                    <a href="#hoe-het-werkt" class="hover:text-brand-dark transition-colors duration-200 cursor-pointer">Hoe het werkt</a>
+                    <a href="#prijzen" class="hover:text-brand-dark transition-colors duration-200 cursor-pointer">Prijzen</a>
+                </div>
+                <a href="#ontwerp" class="bg-brand-dark text-white px-6 py-2.5 text-sm font-semibold tracking-wider uppercase hover:bg-brand-gold transition-colors duration-200 cursor-pointer">
+                    Ontwerp nu
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-gradient min-h-screen flex items-center pt-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-32">
+            <div class="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+                <div class="fade-in">
+                    <p class="text-brand-gold font-semibold tracking-[0.3em] uppercase text-sm mb-6">Kaartwerk</p>
+                    <h1 class="font-serif text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.05] mb-8">
+                        Jouw stad<br>
+                        <span class="gradient-text italic">als kunstwerk</span>
+                    </h1>
+                    <p class="text-brand-medium text-lg md:text-xl leading-relaxed max-w-lg mb-10">
+                        Ontwerp een unieke, minimalistische kaartposter van elke stad ter wereld. Kies je stijl, personaliseer de details en maak er iets bijzonders van — voor aan je muur of als cadeau.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <a href="#ontwerp" class="inline-flex items-center justify-center bg-brand-dark text-white px-8 py-4 text-sm font-semibold tracking-wider uppercase hover:bg-brand-gold transition-colors duration-200 cursor-pointer">
+                            Start met ontwerpen
+                            <svg class="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                        </a>
+                        <a href="#steden" class="inline-flex items-center justify-center border-2 border-brand-dark text-brand-dark px-8 py-4 text-sm font-semibold tracking-wider uppercase hover:bg-brand-dark hover:text-white transition-colors duration-200 cursor-pointer">
+                            Bekijk voorbeelden
+                        </a>
+                    </div>
+                </div>
+                <div class="fade-in relative">
+                    <div class="relative mx-auto max-w-md">
+                        <!-- Mock poster frame -->
+                        <div class="bg-white shadow-2xl p-6 md:p-8">
+                            <div class="bg-brand-dark aspect-[3/4] flex items-center justify-center relative overflow-hidden">
+                                <img src="https://raw.githubusercontent.com/originalankur/maptoposter/main/posters/tokyo_japanese_ink_20260118_142446.png" alt="Tokyo kaartposter in Japanese ink stijl" class="w-full h-full object-cover">
+                            </div>
+                        </div>
+                        <!-- Floating second poster -->
+                        <div class="absolute -bottom-8 -left-8 w-36 md:w-44 bg-white shadow-xl p-3">
+                            <img src="https://raw.githubusercontent.com/originalankur/maptoposter/main/posters/venice_blueprint_20260118_140505.png" alt="Venetië kaartposter in blueprint stijl" class="w-full aspect-[3/4] object-cover">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Bar -->
+    <section class="bg-brand-dark py-6">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-wrap justify-center gap-8 md:gap-16 text-white/70 text-sm tracking-wide">
+                <div class="flex items-center gap-2">
+                    <svg class="w-5 h-5 text-brand-gold" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    <span>100% eigen ontwerp</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <svg class="w-5 h-5 text-brand-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                    <span>Privacy-first — draait in je browser</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <svg class="w-5 h-5 text-brand-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                    <span>High-res export tot 50.000px</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <svg class="w-5 h-5 text-brand-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064"/></svg>
+                    <span>Elke stad ter wereld</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Nederlandse Steden Showcase -->
+    <section id="steden" class="py-24 md:py-32 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 fade-in">
+                <p class="text-brand-gold font-semibold tracking-[0.3em] uppercase text-sm mb-4">Populaire steden</p>
+                <h2 class="font-serif text-4xl md:text-5xl font-bold mb-6">Nederlandse klassiekers</h2>
+                <p class="text-brand-medium text-lg max-w-2xl mx-auto">Van de grachten van Amsterdam tot de skyline van Rotterdam — elke stad heeft haar eigen karakter op papier.</p>
+            </div>
+
+            <!-- Poster Grid -->
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 md:gap-8">
+                <!-- Amsterdam -->
+                <div class="poster-card cursor-pointer fade-in">
+                    <div class="bg-stone-50 p-4 shadow-md">
+                        <div class="bg-brand-dark aspect-[3/4] flex items-center justify-center relative overflow-hidden mb-3">
+                            <div class="absolute inset-0 flex flex-col items-center justify-center text-white p-4">
+                                <div class="w-full h-full border border-white/20 flex flex-col items-center justify-end p-4">
+                                    <svg class="w-full h-3/4 opacity-30" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="none" stroke="white" stroke-width="0.3"/><path d="M20,50 Q35,30 50,50 T80,50" fill="none" stroke="white" stroke-width="0.5"/><path d="M30,40 L50,20 L70,40" fill="none" stroke="white" stroke-width="0.3"/><path d="M25,60 Q50,40 75,60" fill="none" stroke="white" stroke-width="0.4"/></svg>
+                                    <p class="font-serif text-lg font-bold tracking-wider mt-2">AMSTERDAM</p>
+                                    <p class="text-[10px] text-white/60 tracking-widest">52.3676° N, 4.9041° E</p>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-xs font-semibold tracking-wider uppercase text-center">Amsterdam</p>
+                    </div>
+                </div>
+                <!-- Rotterdam -->
+                <div class="poster-card cursor-pointer fade-in">
+                    <div class="bg-stone-50 p-4 shadow-md">
+                        <div class="bg-stone-800 aspect-[3/4] flex items-center justify-center relative overflow-hidden mb-3">
+                            <div class="absolute inset-0 flex flex-col items-center justify-center text-white p-4">
+                                <div class="w-full h-full border border-white/20 flex flex-col items-center justify-end p-4">
+                                    <svg class="w-full h-3/4 opacity-30" viewBox="0 0 100 100"><line x1="10" y1="80" x2="90" y2="80" stroke="white" stroke-width="0.5"/><rect x="20" y="40" width="8" height="40" fill="none" stroke="white" stroke-width="0.3"/><rect x="45" y="25" width="10" height="55" fill="none" stroke="white" stroke-width="0.3"/><rect x="70" y="50" width="8" height="30" fill="none" stroke="white" stroke-width="0.3"/></svg>
+                                    <p class="font-serif text-lg font-bold tracking-wider mt-2">ROTTERDAM</p>
+                                    <p class="text-[10px] text-white/60 tracking-widest">51.9244° N, 4.4777° E</p>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-xs font-semibold tracking-wider uppercase text-center">Rotterdam</p>
+                    </div>
+                </div>
+                <!-- Utrecht -->
+                <div class="poster-card cursor-pointer fade-in">
+                    <div class="bg-stone-50 p-4 shadow-md">
+                        <div class="bg-stone-700 aspect-[3/4] flex items-center justify-center relative overflow-hidden mb-3">
+                            <div class="absolute inset-0 flex flex-col items-center justify-center text-white p-4">
+                                <div class="w-full h-full border border-white/20 flex flex-col items-center justify-end p-4">
+                                    <svg class="w-full h-3/4 opacity-30" viewBox="0 0 100 100"><path d="M50,15 L50,70" stroke="white" stroke-width="0.5"/><circle cx="50" cy="12" r="3" fill="none" stroke="white" stroke-width="0.3"/><path d="M30,70 Q50,55 70,70" fill="none" stroke="white" stroke-width="0.4"/></svg>
+                                    <p class="font-serif text-lg font-bold tracking-wider mt-2">UTRECHT</p>
+                                    <p class="text-[10px] text-white/60 tracking-widest">52.0907° N, 5.1214° E</p>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-xs font-semibold tracking-wider uppercase text-center">Utrecht</p>
+                    </div>
+                </div>
+                <!-- Den Haag -->
+                <div class="poster-card cursor-pointer fade-in">
+                    <div class="bg-stone-50 p-4 shadow-md">
+                        <div class="bg-stone-900 aspect-[3/4] flex items-center justify-center relative overflow-hidden mb-3">
+                            <div class="absolute inset-0 flex flex-col items-center justify-center text-white p-4">
+                                <div class="w-full h-full border border-white/20 flex flex-col items-center justify-end p-4">
+                                    <svg class="w-full h-3/4 opacity-30" viewBox="0 0 100 100"><polygon points="50,20 80,80 20,80" fill="none" stroke="white" stroke-width="0.4"/><circle cx="50" cy="55" r="15" fill="none" stroke="white" stroke-width="0.3"/></svg>
+                                    <p class="font-serif text-lg font-bold tracking-wider mt-2">DEN HAAG</p>
+                                    <p class="text-[10px] text-white/60 tracking-widest">52.0705° N, 4.3007° E</p>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-xs font-semibold tracking-wider uppercase text-center">Den Haag</p>
+                    </div>
+                </div>
+                <!-- Eindhoven -->
+                <div class="poster-card cursor-pointer fade-in">
+                    <div class="bg-stone-50 p-4 shadow-md">
+                        <div class="bg-neutral-800 aspect-[3/4] flex items-center justify-center relative overflow-hidden mb-3">
+                            <div class="absolute inset-0 flex flex-col items-center justify-center text-white p-4">
+                                <div class="w-full h-full border border-white/20 flex flex-col items-center justify-end p-4">
+                                    <svg class="w-full h-3/4 opacity-30" viewBox="0 0 100 100"><circle cx="50" cy="50" r="30" fill="none" stroke="white" stroke-width="0.3"/><circle cx="50" cy="50" r="15" fill="none" stroke="white" stroke-width="0.3"/><line x1="50" y1="20" x2="50" y2="80" stroke="white" stroke-width="0.2"/><line x1="20" y1="50" x2="80" y2="50" stroke="white" stroke-width="0.2"/></svg>
+                                    <p class="font-serif text-lg font-bold tracking-wider mt-2">EINDHOVEN</p>
+                                    <p class="text-[10px] text-white/60 tracking-widest">51.4416° N, 5.4697° E</p>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-xs font-semibold tracking-wider uppercase text-center">Eindhoven</p>
+                    </div>
+                </div>
+                <!-- Groningen -->
+                <div class="poster-card cursor-pointer fade-in">
+                    <div class="bg-stone-50 p-4 shadow-md">
+                        <div class="bg-zinc-800 aspect-[3/4] flex items-center justify-center relative overflow-hidden mb-3">
+                            <div class="absolute inset-0 flex flex-col items-center justify-center text-white p-4">
+                                <div class="w-full h-full border border-white/20 flex flex-col items-center justify-end p-4">
+                                    <svg class="w-full h-3/4 opacity-30" viewBox="0 0 100 100"><path d="M20,70 Q40,30 50,50 T80,30" fill="none" stroke="white" stroke-width="0.4"/><circle cx="35" cy="45" r="8" fill="none" stroke="white" stroke-width="0.3"/></svg>
+                                    <p class="font-serif text-lg font-bold tracking-wider mt-2">GRONINGEN</p>
+                                    <p class="text-[10px] text-white/60 tracking-widest">53.2194° N, 6.5665° E</p>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-xs font-semibold tracking-wider uppercase text-center">Groningen</p>
+                    </div>
+                </div>
+                <!-- Maastricht -->
+                <div class="poster-card cursor-pointer fade-in">
+                    <div class="bg-stone-50 p-4 shadow-md">
+                        <div class="bg-stone-600 aspect-[3/4] flex items-center justify-center relative overflow-hidden mb-3">
+                            <div class="absolute inset-0 flex flex-col items-center justify-center text-white p-4">
+                                <div class="w-full h-full border border-white/20 flex flex-col items-center justify-end p-4">
+                                    <svg class="w-full h-3/4 opacity-30" viewBox="0 0 100 100"><path d="M20,50 Q50,20 80,50 Q50,80 20,50" fill="none" stroke="white" stroke-width="0.4"/><path d="M35,50 L65,50" stroke="white" stroke-width="0.3"/></svg>
+                                    <p class="font-serif text-lg font-bold tracking-wider mt-2">MAASTRICHT</p>
+                                    <p class="text-[10px] text-white/60 tracking-widest">50.8514° N, 5.6910° E</p>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-xs font-semibold tracking-wider uppercase text-center">Maastricht</p>
+                    </div>
+                </div>
+                <!-- Leiden -->
+                <div class="poster-card cursor-pointer fade-in">
+                    <div class="bg-stone-50 p-4 shadow-md">
+                        <div class="bg-neutral-700 aspect-[3/4] flex items-center justify-center relative overflow-hidden mb-3">
+                            <div class="absolute inset-0 flex flex-col items-center justify-center text-white p-4">
+                                <div class="w-full h-full border border-white/20 flex flex-col items-center justify-end p-4">
+                                    <svg class="w-full h-3/4 opacity-30" viewBox="0 0 100 100"><path d="M30,30 L70,30 L70,70 L30,70 Z" fill="none" stroke="white" stroke-width="0.3"/><path d="M40,30 L40,70" stroke="white" stroke-width="0.2"/><path d="M60,30 L60,70" stroke="white" stroke-width="0.2"/><path d="M30,50 L70,50" stroke="white" stroke-width="0.2"/></svg>
+                                    <p class="font-serif text-lg font-bold tracking-wider mt-2">LEIDEN</p>
+                                    <p class="text-[10px] text-white/60 tracking-widest">52.1601° N, 4.4970° E</p>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-xs font-semibold tracking-wider uppercase text-center">Leiden</p>
+                    </div>
+                </div>
+                <!-- Nijmegen -->
+                <div class="poster-card cursor-pointer fade-in">
+                    <div class="bg-stone-50 p-4 shadow-md">
+                        <div class="bg-zinc-700 aspect-[3/4] flex items-center justify-center relative overflow-hidden mb-3">
+                            <div class="absolute inset-0 flex flex-col items-center justify-center text-white p-4">
+                                <div class="w-full h-full border border-white/20 flex flex-col items-center justify-end p-4">
+                                    <svg class="w-full h-3/4 opacity-30" viewBox="0 0 100 100"><path d="M20,60 C40,40 60,40 80,60" fill="none" stroke="white" stroke-width="0.4"/><path d="M30,70 C45,55 55,55 70,70" fill="none" stroke="white" stroke-width="0.3"/></svg>
+                                    <p class="font-serif text-lg font-bold tracking-wider mt-2">NIJMEGEN</p>
+                                    <p class="text-[10px] text-white/60 tracking-widest">51.8126° N, 5.8372° E</p>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-xs font-semibold tracking-wider uppercase text-center">Nijmegen</p>
+                    </div>
+                </div>
+                <!-- Haarlem -->
+                <div class="poster-card cursor-pointer fade-in">
+                    <div class="bg-stone-50 p-4 shadow-md">
+                        <div class="bg-stone-800 aspect-[3/4] flex items-center justify-center relative overflow-hidden mb-3">
+                            <div class="absolute inset-0 flex flex-col items-center justify-center text-white p-4">
+                                <div class="w-full h-full border border-white/20 flex flex-col items-center justify-end p-4">
+                                    <svg class="w-full h-3/4 opacity-30" viewBox="0 0 100 100"><rect x="35" y="25" width="30" height="45" fill="none" stroke="white" stroke-width="0.3"/><path d="M50,25 L35,40 M50,25 L65,40" stroke="white" stroke-width="0.3"/><circle cx="50" cy="75" r="5" fill="none" stroke="white" stroke-width="0.3"/></svg>
+                                    <p class="font-serif text-lg font-bold tracking-wider mt-2">HAARLEM</p>
+                                    <p class="text-[10px] text-white/60 tracking-widest">52.3874° N, 4.6462° E</p>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-xs font-semibold tracking-wider uppercase text-center">Haarlem</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-12 fade-in">
+                <p class="text-brand-muted text-sm">En meer dan <span class="font-semibold text-brand-dark">100.000+</span> steden wereldwijd beschikbaar</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Artistic Themes Section (Colorful!) -->
+    <section id="themas" class="py-24 md:py-32 bg-brand-dark text-white overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 fade-in">
+                <p class="text-brand-gold font-semibold tracking-[0.3em] uppercase text-sm mb-4">20+ Thema's</p>
+                <h2 class="font-serif text-4xl md:text-5xl font-bold mb-6">Van minimalistisch<br>tot <span class="italic text-brand-gold">kleurexplosie</span></h2>
+                <p class="text-white/60 text-lg max-w-2xl mx-auto">Kies uit verfijnde monochrome stijlen of ga all-out met levendige artistieke thema's. Elk thema is met de hand ontworpen.</p>
+            </div>
+
+            <!-- Theme showcase - horizontal scroll -->
+            <div class="scroll-gallery flex gap-6 overflow-x-auto pb-8 px-4 -mx-4">
+                <!-- Arctic Frost -->
+                <div class="flex-none w-56 poster-card cursor-pointer">
+                    <div class="rounded-lg overflow-hidden" style="background: linear-gradient(135deg, #E8F4FD, #B8D8E8, #FFFFFF);">
+                        <div class="aspect-[3/4] p-6 flex flex-col justify-end">
+                            <p class="font-serif text-xl font-bold text-blue-900">Arctic Frost</p>
+                            <p class="text-blue-800/60 text-xs mt-1">Ijzig, helder, sereen</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Aurora Glow -->
+                <div class="flex-none w-56 poster-card cursor-pointer">
+                    <div class="rounded-lg overflow-hidden" style="background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460, #53d8a8, #e94560);">
+                        <div class="aspect-[3/4] p-6 flex flex-col justify-end">
+                            <p class="font-serif text-xl font-bold text-emerald-300">Aurora Glow</p>
+                            <p class="text-emerald-200/60 text-xs mt-1">Iriserende aurora</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Cyber Glitch -->
+                <div class="flex-none w-56 poster-card cursor-pointer">
+                    <div class="rounded-lg overflow-hidden" style="background: linear-gradient(135deg, #0D0D0D, #1A0033, #FF00FF, #00FFFF);">
+                        <div class="aspect-[3/4] p-6 flex flex-col justify-end">
+                            <p class="font-serif text-xl font-bold text-fuchsia-400">Cyber Glitch</p>
+                            <p class="text-cyan-300/60 text-xs mt-1">Neon digitaal</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Paper Heritage -->
+                <div class="flex-none w-56 poster-card cursor-pointer">
+                    <div class="rounded-lg overflow-hidden" style="background: linear-gradient(135deg, #F5E6D3, #E8D5B7, #D4B896);">
+                        <div class="aspect-[3/4] p-6 flex flex-col justify-end">
+                            <p class="font-serif text-xl font-bold text-amber-900">Paper Heritage</p>
+                            <p class="text-amber-800/60 text-xs mt-1">Vintage sepia</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Volcanic Ash -->
+                <div class="flex-none w-56 poster-card cursor-pointer">
+                    <div class="rounded-lg overflow-hidden" style="background: linear-gradient(135deg, #2D2D2D, #3D3D3D, #FF4500, #FF6B35);">
+                        <div class="aspect-[3/4] p-6 flex flex-col justify-end">
+                            <p class="font-serif text-xl font-bold text-orange-400">Volcanic Ash</p>
+                            <p class="text-orange-300/60 text-xs mt-1">Gloeiend magma</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Blueprint -->
+                <div class="flex-none w-56 poster-card cursor-pointer">
+                    <div class="rounded-lg overflow-hidden" style="background: linear-gradient(135deg, #003366, #004488, #0066AA);">
+                        <div class="aspect-[3/4] p-6 flex flex-col justify-end">
+                            <p class="font-serif text-xl font-bold text-blue-200">Blueprint</p>
+                            <p class="text-blue-300/60 text-xs mt-1">Technische tekening</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Sakura Bloom -->
+                <div class="flex-none w-56 poster-card cursor-pointer">
+                    <div class="rounded-lg overflow-hidden" style="background: linear-gradient(135deg, #FFF0F5, #FFB7C5, #FF69B4);">
+                        <div class="aspect-[3/4] p-6 flex flex-col justify-end">
+                            <p class="font-serif text-xl font-bold text-pink-800">Sakura Bloom</p>
+                            <p class="text-pink-700/60 text-xs mt-1">Japanse kersenbloesem</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Retro Synth -->
+                <div class="flex-none w-56 poster-card cursor-pointer">
+                    <div class="rounded-lg overflow-hidden" style="background: linear-gradient(135deg, #1A0533, #2D1B69, #E040FB, #FF6EC7);">
+                        <div class="aspect-[3/4] p-6 flex flex-col justify-end">
+                            <p class="font-serif text-xl font-bold text-purple-300">Retro Synth</p>
+                            <p class="text-purple-200/60 text-xs mt-1">Synthwave vibes</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Midnight Dark -->
+                <div class="flex-none w-56 poster-card cursor-pointer">
+                    <div class="rounded-lg overflow-hidden" style="background: linear-gradient(135deg, #0A0A0A, #1A1A2E, #16213E);">
+                        <div class="aspect-[3/4] p-6 flex flex-col justify-end">
+                            <p class="font-serif text-xl font-bold text-slate-300">Midnight Dark</p>
+                            <p class="text-slate-400/60 text-xs mt-1">Donkere elegantie</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Minimal White -->
+                <div class="flex-none w-56 poster-card cursor-pointer">
+                    <div class="rounded-lg overflow-hidden border border-white/20" style="background: linear-gradient(135deg, #FFFFFF, #F8F8F8, #EEEEEE);">
+                        <div class="aspect-[3/4] p-6 flex flex-col justify-end">
+                            <p class="font-serif text-xl font-bold text-stone-800">Minimal White</p>
+                            <p class="text-stone-500 text-xs mt-1">Strak en clean</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-8 fade-in">
+                <p class="text-white/40 text-sm">Scroll om meer thema's te ontdekken →</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- How it Works -->
+    <section id="hoe-het-werkt" class="py-24 md:py-32 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-20 fade-in">
+                <p class="text-brand-gold font-semibold tracking-[0.3em] uppercase text-sm mb-4">Simpel</p>
+                <h2 class="font-serif text-4xl md:text-5xl font-bold">In 3 stappen klaar</h2>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-12 md:gap-8">
+                <!-- Step 1 -->
+                <div class="text-center fade-in">
+                    <div class="w-16 h-16 mx-auto mb-6 flex items-center justify-center border-2 border-brand-dark">
+                        <span class="font-serif text-2xl font-bold">1</span>
+                    </div>
+                    <h3 class="font-serif text-xl font-bold mb-3">Kies je stad</h3>
+                    <p class="text-brand-medium leading-relaxed">Zoek elke stad, dorp of plek ter wereld. Van Amsterdam tot Tokio — alles is mogelijk.</p>
+                </div>
+                <!-- Step 2 -->
+                <div class="text-center fade-in">
+                    <div class="w-16 h-16 mx-auto mb-6 flex items-center justify-center border-2 border-brand-dark">
+                        <span class="font-serif text-2xl font-bold">2</span>
+                    </div>
+                    <h3 class="font-serif text-xl font-bold mb-3">Pas je stijl aan</h3>
+                    <p class="text-brand-medium leading-relaxed">Kies een thema, pas kleuren en typografie aan, voeg markers en routes toe. Maak het helemaal van jou.</p>
+                </div>
+                <!-- Step 3 -->
+                <div class="text-center fade-in">
+                    <div class="w-16 h-16 mx-auto mb-6 flex items-center justify-center border-2 border-brand-dark">
+                        <span class="font-serif text-2xl font-bold">3</span>
+                    </div>
+                    <h3 class="font-serif text-xl font-bold mb-3">Download & print</h3>
+                    <p class="text-brand-medium leading-relaxed">Exporteer als high-res PNG — perfect voor groot formaat print. Of bestel direct een ingelijste poster.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Real Poster Examples -->
+    <section class="py-24 md:py-32 bg-stone-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 fade-in">
+                <p class="text-brand-gold font-semibold tracking-[0.3em] uppercase text-sm mb-4">Inspiratie</p>
+                <h2 class="font-serif text-4xl md:text-5xl font-bold mb-6">Echte posters, echte steden</h2>
+                <p class="text-brand-medium text-lg max-w-2xl mx-auto">Gemaakt met Kaartwerk — van cyberpunk Singapore tot klassiek Venetië.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="poster-card cursor-pointer fade-in">
+                    <div class="bg-white p-4 shadow-md">
+                        <img src="https://raw.githubusercontent.com/originalankur/maptoposter/main/posters/singapore_neon_cyberpunk_20260118_153328.png" alt="Singapore neon cyberpunk poster" class="w-full aspect-[3/4] object-cover mb-3" loading="lazy">
+                        <p class="text-xs font-semibold tracking-wider uppercase">Singapore — Neon Cyberpunk</p>
+                    </div>
+                </div>
+                <div class="poster-card cursor-pointer fade-in">
+                    <div class="bg-white p-4 shadow-md">
+                        <img src="https://raw.githubusercontent.com/originalankur/maptoposter/main/posters/barcelona_warm_beige_20260118_140048.png" alt="Barcelona warm beige poster" class="w-full aspect-[3/4] object-cover mb-3" loading="lazy">
+                        <p class="text-xs font-semibold tracking-wider uppercase">Barcelona — Warm Beige</p>
+                    </div>
+                </div>
+                <div class="poster-card cursor-pointer fade-in">
+                    <div class="bg-white p-4 shadow-md">
+                        <img src="https://raw.githubusercontent.com/originalankur/maptoposter/main/posters/dubai_midnight_blue_20260118_140807.png" alt="Dubai midnight blue poster" class="w-full aspect-[3/4] object-cover mb-3" loading="lazy">
+                        <p class="text-xs font-semibold tracking-wider uppercase">Dubai — Midnight Blue</p>
+                    </div>
+                </div>
+                <div class="poster-card cursor-pointer fade-in">
+                    <div class="bg-white p-4 shadow-md">
+                        <img src="https://raw.githubusercontent.com/originalankur/maptoposter/main/posters/san_francisco_sunset_20260118_144726.png" alt="San Francisco sunset poster" class="w-full aspect-[3/4] object-cover mb-3" loading="lazy">
+                        <p class="text-xs font-semibold tracking-wider uppercase">San Francisco — Sunset</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="prijzen" class="py-24 md:py-32 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 fade-in">
+                <p class="text-brand-gold font-semibold tracking-[0.3em] uppercase text-sm mb-4">Prijzen</p>
+                <h2 class="font-serif text-4xl md:text-5xl font-bold mb-6">Kies jouw formaat</h2>
+                <p class="text-brand-medium text-lg max-w-2xl mx-auto">Van digitale download tot ingelijst meesterwerk — altijd scherp geprijsd.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <!-- Digital -->
+                <div class="pricing-card border-2 border-stone-200 p-8 text-center cursor-pointer fade-in">
+                    <p class="text-sm font-semibold tracking-wider uppercase text-brand-muted mb-4">Digitaal</p>
+                    <div class="mb-6">
+                        <span class="font-serif text-5xl font-bold">€9</span>
+                        <span class="text-brand-muted text-lg">,95</span>
+                    </div>
+                    <ul class="text-brand-medium text-sm space-y-3 mb-8 text-left">
+                        <li class="flex items-start gap-3">
+                            <svg class="w-5 h-5 text-brand-gold flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                            <span>High-res PNG download</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <svg class="w-5 h-5 text-brand-gold flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                            <span>Tot 10.000px resolutie</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <svg class="w-5 h-5 text-brand-gold flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                            <span>Alle thema's beschikbaar</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <svg class="w-5 h-5 text-brand-gold flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                            <span>Zelf printen bij je printshop</span>
+                        </li>
+                    </ul>
+                    <a href="#ontwerp" class="block border-2 border-brand-dark text-brand-dark py-3 text-sm font-semibold tracking-wider uppercase hover:bg-brand-dark hover:text-white transition-colors duration-200">
+                        Kies digitaal
+                    </a>
+                </div>
+
+                <!-- Print - Popular -->
+                <div class="pricing-card border-2 border-brand-gold p-8 text-center relative cursor-pointer fade-in scale-105">
+                    <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-brand-gold text-white text-xs font-bold tracking-wider uppercase px-4 py-1">
+                        Populair
+                    </div>
+                    <p class="text-sm font-semibold tracking-wider uppercase text-brand-muted mb-4">Premium Print</p>
+                    <div class="mb-6">
+                        <span class="font-serif text-5xl font-bold">€29</span>
+                        <span class="text-brand-muted text-lg">,95</span>
+                    </div>
+                    <ul class="text-brand-medium text-sm space-y-3 mb-8 text-left">
+                        <li class="flex items-start gap-3">
+                            <svg class="w-5 h-5 text-brand-gold flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                            <span>Alles van Digitaal +</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <svg class="w-5 h-5 text-brand-gold flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                            <span>Gedrukt op 250g mat papier</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <svg class="w-5 h-5 text-brand-gold flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                            <span>Formaten: A4, A3, A2, 50×70</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <svg class="w-5 h-5 text-brand-gold flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                            <span>Gratis verzending NL</span>
+                        </li>
+                    </ul>
+                    <a href="#ontwerp" class="block bg-brand-dark text-white py-3 text-sm font-semibold tracking-wider uppercase hover:bg-brand-gold transition-colors duration-200">
+                        Kies premium print
+                    </a>
+                </div>
+
+                <!-- Framed -->
+                <div class="pricing-card border-2 border-stone-200 p-8 text-center cursor-pointer fade-in">
+                    <p class="text-sm font-semibold tracking-wider uppercase text-brand-muted mb-4">Ingelijst</p>
+                    <div class="mb-6">
+                        <span class="font-serif text-5xl font-bold">€59</span>
+                        <span class="text-brand-muted text-lg">,95</span>
+                    </div>
+                    <ul class="text-brand-medium text-sm space-y-3 mb-8 text-left">
+                        <li class="flex items-start gap-3">
+                            <svg class="w-5 h-5 text-brand-gold flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                            <span>Alles van Premium Print +</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <svg class="w-5 h-5 text-brand-gold flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                            <span>Eiken of zwarte houten lijst</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <svg class="w-5 h-5 text-brand-gold flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                            <span>Museumglas (anti-reflectie)</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <svg class="w-5 h-5 text-brand-gold flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                            <span>Direct ophangklaar</span>
+                        </li>
+                    </ul>
+                    <a href="#ontwerp" class="block border-2 border-brand-dark text-brand-dark py-3 text-sm font-semibold tracking-wider uppercase hover:bg-brand-dark hover:text-white transition-colors duration-200">
+                        Kies ingelijst
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="py-24 md:py-32 bg-stone-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 fade-in">
+                <p class="text-brand-gold font-semibold tracking-[0.3em] uppercase text-sm mb-4">Klanten</p>
+                <h2 class="font-serif text-4xl md:text-5xl font-bold">Wat zij zeggen</h2>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-white p-8 shadow-sm fade-in">
+                    <div class="flex gap-1 mb-4">
+                        <svg class="w-4 h-4 text-brand-gold" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-4 h-4 text-brand-gold" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-4 h-4 text-brand-gold" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-4 h-4 text-brand-gold" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-4 h-4 text-brand-gold" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    </div>
+                    <p class="text-brand-medium leading-relaxed mb-6">"Mijn Amsterdam poster hangt nu boven de bank en iedereen vraagt waar ik hem vandaan heb. De kwaliteit is echt gaaf."</p>
+                    <p class="text-sm font-semibold">Lisa M.</p>
+                    <p class="text-xs text-brand-muted">Amsterdam — Midnight Dark</p>
+                </div>
+                <div class="bg-white p-8 shadow-sm fade-in">
+                    <div class="flex gap-1 mb-4">
+                        <svg class="w-4 h-4 text-brand-gold" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-4 h-4 text-brand-gold" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-4 h-4 text-brand-gold" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-4 h-4 text-brand-gold" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-4 h-4 text-brand-gold" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    </div>
+                    <p class="text-brand-medium leading-relaxed mb-6">"Als cadeau voor mijn vriendin haar geboortestad — ze was er helemaal stil van. Perfect ingelijst, super kwaliteit."</p>
+                    <p class="text-sm font-semibold">Mark V.</p>
+                    <p class="text-xs text-brand-muted">Groningen — Arctic Frost</p>
+                </div>
+                <div class="bg-white p-8 shadow-sm fade-in">
+                    <div class="flex gap-1 mb-4">
+                        <svg class="w-4 h-4 text-brand-gold" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-4 h-4 text-brand-gold" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-4 h-4 text-brand-gold" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-4 h-4 text-brand-gold" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-4 h-4 text-brand-gold" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    </div>
+                    <p class="text-brand-medium leading-relaxed mb-6">"Ik heb nu een hele wand met kaartposters van alle steden waar we samen zijn geweest. Verslavend!"</p>
+                    <p class="text-sm font-semibold">Sophie & Tom</p>
+                    <p class="text-xs text-brand-muted">Rotterdam, Utrecht, Leiden — Paper Heritage</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section id="ontwerp" class="py-24 md:py-32 bg-brand-dark text-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center fade-in">
+            <img src="public/kaartwerk-logo.png" alt="Kaartwerk" class="h-16 mx-auto mb-8 invert brightness-200">
+            <h2 class="font-serif text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
+                Begin met ontwerpen
+            </h2>
+            <p class="text-white/60 text-lg md:text-xl max-w-2xl mx-auto mb-10">
+                Kies je favoriete stad, selecteer een thema en maak een poster die nergens anders te krijgen is. Helemaal gratis te ontwerpen — betaal alleen als je tevreden bent.
+            </p>
+            <a href="index.html" class="inline-flex items-center justify-center bg-brand-gold text-brand-dark px-10 py-4 text-sm font-bold tracking-wider uppercase hover:bg-brand-gold-light transition-colors duration-200 cursor-pointer">
+                Open de ontwerptool
+                <svg class="ml-3 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+            </a>
+            <p class="text-white/30 text-sm mt-6">Geen account nodig — draait volledig in je browser</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-brand-dark border-t border-white/10 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div class="md:col-span-2">
+                    <img src="public/kaartwerk-logo.png" alt="Kaartwerk" class="h-8 mb-4 invert brightness-200">
+                    <p class="text-white/40 text-sm max-w-sm leading-relaxed">Kaartwerk maakt van elke stad een kunstwerk. Ontwerp, personaliseer en print jouw unieke kaartposter.</p>
+                </div>
+                <div>
+                    <h4 class="text-white text-sm font-semibold tracking-wider uppercase mb-4">Pagina's</h4>
+                    <ul class="space-y-2 text-white/40 text-sm">
+                        <li><a href="#steden" class="hover:text-white transition-colors duration-200 cursor-pointer">Steden</a></li>
+                        <li><a href="#themas" class="hover:text-white transition-colors duration-200 cursor-pointer">Thema's</a></li>
+                        <li><a href="#hoe-het-werkt" class="hover:text-white transition-colors duration-200 cursor-pointer">Hoe het werkt</a></li>
+                        <li><a href="#prijzen" class="hover:text-white transition-colors duration-200 cursor-pointer">Prijzen</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white text-sm font-semibold tracking-wider uppercase mb-4">Contact</h4>
+                    <ul class="space-y-2 text-white/40 text-sm">
+                        <li><a href="mailto:info@kaartwerk.nl" class="hover:text-white transition-colors duration-200 cursor-pointer">info@kaartwerk.nl</a></li>
+                        <li><span>KvK 12345678</span></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-white/10 mt-8 pt-8 text-center">
+                <p class="text-white/30 text-xs">&copy; 2026 Kaartwerk. Alle rechten voorbehouden.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll Animation Script -->
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.classList.add('visible');
+                    }, index * 80);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
