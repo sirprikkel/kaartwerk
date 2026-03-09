@@ -340,7 +340,7 @@ export function setupControls() {
 				<div class="flex items-center justify-between">
 					<p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">My Themes</p>
 					<div class="flex items-center gap-2">
-						<button id="export-custom-themes-btn" class="text-[10px] font-bold text-slate-400 hover:text-accent transition-colors flex items-center gap-1" title="Export all custom themes as JSON">
+						<button id="export-custom-themes-btn" class="text-[10px] font-bold text-slate-400 hover:text-accent transition-colors flex items-center gap-1" title="Exporteer eigen themas als JSON">
 							<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
 							Export
 						</button>
@@ -393,7 +393,7 @@ export function setupControls() {
 			<input type="file" id="import-custom-themes-file" accept=".json,application/json" class="hidden" />
 			${customSection}
 			<div class="mb-2">
-				<input id="artistic-search" type="search" placeholder="Search themes..." class="w-full input-field" />
+				<input id="artistic-search" type="search" placeholder="Zoek themas..." class="w-full input-field" />
 			</div>
 			<div class="space-y-2">${builtinHtml}</div>
 		`;
@@ -495,7 +495,7 @@ export function setupControls() {
 
 		modalContent.innerHTML = `
 			<div class="mb-4">
-				<input id="preset-search" type="search" placeholder="Search sizes or preset names..." class="w-full input-field" />
+				<input id="preset-search" type="search" placeholder="Zoek formaten of presetnamen..." class="w-full input-field" />
 			</div>
 			<div class="space-y-6">${groupsHtml}</div>
 		`;
