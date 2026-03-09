@@ -479,7 +479,7 @@ export const artisticThemes = {
 		road_residential: "#450A0A",
 		road_default: "#B91C1C",
 		route: "#FACC15"
-	}
+	},
 	autumn: {
 		name: "Autumn",
 		description: "Burnt oranges, deep reds, golden yellows - seasonal warmth",
