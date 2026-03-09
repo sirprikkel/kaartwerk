@@ -1,4 +1,5 @@
 import { defineConfig } from 'vite';
+import { resolve } from 'path';
 import tailwindcss from 'tailwindcss';
 import autoprefixer from 'autoprefixer';
 
@@ -13,6 +14,12 @@ export default defineConfig({
 	},
 	build: {
 		target: 'esnext',
+		rollupOptions: {
+			input: {
+				main: resolve(__dirname, 'index.html'),
+				landing: resolve(__dirname, 'landing.html'),
+			},
+		},
 	},
 	css: {
 		postcss: {
