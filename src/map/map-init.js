@@ -75,7 +75,8 @@ function initArtisticMap(containerId, center, zoom) {
 		zoom: zoom,
 		interactive: true,
 		attributionControl: false,
-		preserveDrawingBuffer: true
+		preserveDrawingBuffer: true,
+		pixelRatio: Math.max(window.devicePixelRatio || 1, 2)
 	});
 
 	artisticMap.scrollZoom.setWheelZoomRate(1);
