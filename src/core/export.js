@@ -507,11 +507,15 @@ export async function exportToPNG(element, filename, statusElement, options = {}
 					}
 				}
 
+				const fontScale = Math.max(1, outputW / 1080);
+
 				const city = clonedDoc.querySelector('#display-city');
 				if (city) {
 					city.style.transform = 'none';
 					city.style.color = textColor;
 					city.style.fontFamily = state.cityFont;
+					const baseCitySize = parseFloat(window.getComputedStyle(document.getElementById('display-city')).fontSize) || 48;
+					city.style.fontSize = `${baseCitySize * fontScale}px`;
 				}
 
 				const country = clonedDoc.querySelector('#display-country');
@@ -520,6 +524,8 @@ export async function exportToPNG(element, filename, statusElement, options = {}
 					country.style.color = textColor;
 					country.style.fontFamily = state.countryFont;
 					if (state.showCountry === false) country.style.display = 'none';
+					const baseCountrySize = parseFloat(window.getComputedStyle(document.getElementById('display-country')).fontSize) || 18;
+					country.style.fontSize = `${baseCountrySize * fontScale}px`;
 				}
 
 				const coords = clonedDoc.querySelector('#display-coords');
@@ -528,6 +534,14 @@ export async function exportToPNG(element, filename, statusElement, options = {}
 					coords.style.color = textColor;
 					coords.style.fontFamily = state.coordsFont;
 					if (state.showCoords === false) coords.style.display = 'none';
+					const baseCoordsSize = parseFloat(window.getComputedStyle(document.getElementById('display-coords')).fontSize) || 16;
+					coords.style.fontSize = `${baseCoordsSize * fontScale}px`;
+				}
+
+				const divider = clonedDoc.querySelector('#poster-divider');
+				if (divider) {
+					divider.style.width = `${8 * fontScale}rem`;
+					divider.style.height = `${Math.max(1, fontScale)}px`;
 				}
 
 				const attr = clonedDoc.querySelector('#poster-attribution');

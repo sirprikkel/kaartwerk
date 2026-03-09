@@ -47,7 +47,7 @@ export function generateMapLibreStyle(theme) {
 				'source-layer': 'transportation',
 				type: 'line',
 				filter: ['!', ['match', ['get', 'class'], ['motorway', 'primary', 'secondary', 'tertiary', 'residential'], true, false]],
-				paint: { 'line-color': theme.road_default, 'line-width': 0.8 }
+				paint: { 'line-color': theme.road_default, 'line-width': 0.5 }
 			},
 			{
 				id: 'road-residential',
@@ -55,7 +55,7 @@ export function generateMapLibreStyle(theme) {
 				'source-layer': 'transportation',
 				type: 'line',
 				filter: ['==', ['get', 'class'], 'residential'],
-				paint: { 'line-color': theme.road_residential, 'line-width': 0.8 }
+				paint: { 'line-color': theme.road_residential, 'line-width': 0.5 }
 			},
 			{
 				id: 'road-tertiary',
@@ -63,7 +63,7 @@ export function generateMapLibreStyle(theme) {
 				'source-layer': 'transportation',
 				type: 'line',
 				filter: ['==', ['get', 'class'], 'tertiary'],
-				paint: { 'line-color': theme.road_tertiary, 'line-width': 1.2 }
+				paint: { 'line-color': theme.road_tertiary, 'line-width': 0.8 }
 			},
 			{
 				id: 'road-secondary',
@@ -71,7 +71,7 @@ export function generateMapLibreStyle(theme) {
 				'source-layer': 'transportation',
 				type: 'line',
 				filter: ['==', ['get', 'class'], 'secondary'],
-				paint: { 'line-color': theme.road_secondary, 'line-width': 1.5 }
+				paint: { 'line-color': theme.road_secondary, 'line-width': 1.0 }
 			},
 			{
 				id: 'road-primary',
@@ -79,7 +79,7 @@ export function generateMapLibreStyle(theme) {
 				'source-layer': 'transportation',
 				type: 'line',
 				filter: ['==', ['get', 'class'], 'primary'],
-				paint: { 'line-color': theme.road_primary, 'line-width': 2.0 }
+				paint: { 'line-color': theme.road_primary, 'line-width': 1.5 }
 			},
 			{
 				id: 'road-motorway',
@@ -87,7 +87,7 @@ export function generateMapLibreStyle(theme) {
 				'source-layer': 'transportation',
 				type: 'line',
 				filter: ['==', ['get', 'class'], 'motorway'],
-				paint: { 'line-color': theme.road_motorway, 'line-width': 2.5 }
+				paint: { 'line-color': theme.road_motorway, 'line-width': 2.0 }
 			},
 			{
 				id: 'route-line-casing',
